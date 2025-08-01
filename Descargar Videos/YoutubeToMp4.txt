@@ -1,0 +1,21 @@
+import yt_dlp
+import os
+
+# Solicitar al usuario el enlace del video
+link = input("Inserta el link del video: ")
+
+# Especificar la carpeta donde deseas guardar el video
+output_folder = r"-------"  # Ruta de la carpeta deseada
+os.makedirs(output_folder, exist_ok=True)  # Crea la carpeta si no existe
+
+ydl_opts = {
+    'format': 'bestvideo+bestaudio/best',
+    'outtmpl': os.path.join(output_folder, '%(title)s.%(ext)s'),  # Ruta completa
+}
+
+try:
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([link])
+    print("\nDescarga completada! El video se guardó en:", output_folder)
+except Exception as e:
+    print("Se produjo un error:", e)
